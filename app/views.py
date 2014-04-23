@@ -27,7 +27,6 @@ def before_request():
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
   user = g.user
   schools = [ # Array of schools attended.
