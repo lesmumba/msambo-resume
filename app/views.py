@@ -4,6 +4,12 @@ from app import app, db, lm, oid
 from forms import LoginForm, EditForm
 from models import User, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
+from app import babel
+from config import LANGUAGES
+
+@babel.localeselector
+def get_locale():
+    return request.accept_languages.best_match(LANGUAGES.keys())
 
 @lm.user_loader
 def load_user(id):
