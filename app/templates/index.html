@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% set active_page = "index" %}
+{% block content %}
+{% include 'welcome_modal.html' %}
+<div class="container-fluid" id="home_page">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="jumbotron">
+        <h1>Welcome!</h1>
+        <p>This is the website for Mumba Sambo and serves as a resume of sorts.
+        <br />
+        This site was really built so that I could try out some things and as a result some things might not work properly...<br /><br />
+        Enjoy your stay,</p>
+        <h2><em>Mumba</em></h3>
+      </div>
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3>
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                Education
+              </a>
+              {# <span class="caret text-right"></span> #}
+            </h2>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse">
+            <div class="panel-body">
+              {% for school in schools %}
+              <h3>{{school.name}} &nbsp;<small>{{school.start_year}} - {{school.end_year}} </small></h3>
+              {% for course in school.courses %}
+                <p>{{course}}</p>
+              {% endfor %}
+              <hr>
+              {% endfor %}
+            </div>
+          </div>
+        </div> {# End accordion 1. #}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3>
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                Experience
+              </a>
+            </h2>
+          </div>
+          <div id="collapseTwo" class="panel-collapse collapse">
+            <div class="panel-body">
+              {% for experience in experiences %}
+              <h3><a href="{{ experience.company.link }}">{{experience.company.name}}</a> | {{experience.position}}</h3>
+              <h4>{{experience.start_month}} {{experience.start_year}} -
+              {% if experience.is_current %}
+                Present
+              {% else %}
+                {{experience.end_month}} {{experience.end_year}}
+              {% endif %}
+              </h4>
+              <hr>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
