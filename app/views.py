@@ -6,6 +6,7 @@ from models import User, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
 from app import babel
 from config import LANGUAGES
+from library import constants
 
 @babel.localeselector
 def get_locale():
@@ -14,6 +15,10 @@ def get_locale():
 @lm.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+@app.context_processor
+def inject_constants():
+    return dict(constants=constants)
 
 @app.before_request
 def before_request():
@@ -29,57 +34,8 @@ def before_request():
 @app.route('/index')
 def index():
   user = g.user
-  schools = [ # Array of schools attended.
-    {
-      'name': "Wolmer's High School For Boys'",
-      'degree': {
-        'type': 'High School',
-        'field': 'Diploma'
-      },
-      'start_year': 2002,
-      'end_year': 2009,
-      'courses': {
-        'Mathematics',
-        'Computer Science',
-        'English'
-      }
-    },
-    {
-      'name': "The University of the West Indies, Mona Campus",
-      'degree': {
-        'type': 'BSc.',
-        'field': 'Computer Science'
-      },
-      'start_year': 2009,
-      'end_year': 2014
-    }]
-  experiences = [ # Array of experiences.
-    {
-      'position': 'CEO',
-      'company': {
-        'name': 'HireForge Solutions Limited',
-        'link': 'http://www.hireforge.com'
-      },
-      'start_month': 'June',
-      'start_year': 2013,
-      'is_current': True
-    }]
-  posts = [ # fake array of posts
-      {
-        'author': { 'nickname': 'John' },
-        'body': 'Beautiful day in Portland!'
-        },
-      {
-        'author': { 'nickname': 'Susan' },
-        'body': 'The Avengers movie was so cool!'
-        }
-      ]
   return render_template("index.html",
-                         title = 'Home',
-                         user = user,
-                         schools = schools,
-                         posts = posts,
-                         experiences = experiences)
+                         title = 'Home')
 
 @app.route('/login', methods = ['GET', 'POST'])
 @oid.loginhandler
