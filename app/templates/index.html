@@ -25,12 +25,18 @@
           </div>
           <div id="collapseOne" class="panel-collapse collapse">
             <div class="panel-body">
-              {% for school in schools %}
-              <h3>{{school.name}} &nbsp;<small>{{school.start_year}} - {{school.end_year}} </small></h3>
-              {% for course in school.courses %}
-                <p>{{course}}</p>
-              {% endfor %}
-              <hr>
+              {% for school in constants.schools %}
+                <h3>{{school.name}} &nbsp;<small>{{school.start_year}} - {{school.end_year}} </small></h3>
+                <p><strong>{{school.degree.type}}</strong> {{school.degree.field}}</p>
+                {% if school.courses %}
+                  <h4>Courses</h4>
+                  <ul>
+                  {% for course in school.courses %}
+                    <li><p>{{course}}</p></li>
+                  {% endfor %}
+                  </ul>
+                {% endif %}
+                {% if not loop.last %}<hr>{% endif %}
               {% endfor %}
             </div>
           </div>
@@ -45,7 +51,8 @@
           </div>
           <div id="collapseTwo" class="panel-collapse collapse">
             <div class="panel-body">
-              {% for experience in experiences %}
+              {% for experience in constants.experiences %}
+              <i class="glyphicon glyphicon-asterisk"></i>
               <h3><a href="{{ experience.company.link }}">{{experience.company.name}}</a> | {{experience.position}}</h3>
               <h4>{{experience.start_month}} {{experience.start_year}} -
               {% if experience.is_current %}
