@@ -4,7 +4,6 @@ from app import app, db, lm, oid
 from forms import LoginForm, EditForm
 from models import User, ROLE_USER, ROLE_ADMIN
 from datetime import datetime
-from app import babel
 from config import LANGUAGES
 from library import constants
 
